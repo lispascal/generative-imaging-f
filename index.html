@@ -1,10 +1,49 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Hello World!</title>
-  </head>
-  <body>
-    <h1>Hello World!</h1>
-    
-  </body>
+    <head>
+        <title>Generative Imaging F</title>
+        <link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.indigo-pink.min.css">
+        <link rel="stylesheet" href="css/index.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    </head>
+    <body ng-app="imagingApp">
+        <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+            <header class="mdl-layout__header">
+                <div class="mdl-layout__header-row">
+                <!-- Title -->
+                    <span class="mdl-layout-title">Title</span>
+                    <!-- Add spacer, to align navigation to the right -->
+                    <div class="mdl-layout-spacer"></div>
+                    <!-- Navigation. We hide it in small screens. -->
+                    <nav class="mdl-navigation mdl-layout--large-screen-only">
+                        <a class="mdl-navigation__link" href="">Link</a>
+                        <a class="mdl-navigation__link" href="">Link</a>
+                        <a class="mdl-navigation__link" href="">Link</a>
+                        <a class="mdl-navigation__link" href="">Link</a>
+                    </nav>
+                </div>
+            </header>
+            <main class="mdl-layout__content">
+                <div class="page-content">
+                    <div class="mdl-grid" ng-controller="imagingSimulation">
+                        <!-- canvas -->
+                        <div id="canvasCell" class="mdl-cell mdl-cell--6-col">
+                            <canvas id="canvas" width="600" height="600" ng-click="handleClick($event)"></canvas>
+                        </div>
+                        <!-- options -->
+                        <div id="options" class="mdl-cell mdl-cell--4-col">
+                            <h4>Simulation Properties</h4>
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect"
+                            ng-click="step()">Step</button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </body>
+
+    <script src="https://storage.googleapis.com/code.getmdl.io/1.0.6/material.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0-beta.2/angular.min.js"></script>
+    <script src="./js/canvas.js"></script>
+    <script src="./js/imaging.js"></script>
 </html>
