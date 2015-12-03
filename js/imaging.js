@@ -3,10 +3,12 @@ var imagingApp = angular.module('imagingApp', []);
 imagingApp.controller('imagingSimulation', function($scope) {
     $scope.width = 20;
     $scope.height = 20;
-    var size = 18;
-    var border = 1;
+    $scope.history = [];
+    $scope.saveName = "";
+    $scope.squareSize = 18;
+    $scope.borderSize = 1;
     $scope.canvas = new Canvas(document.getElementById('canvas'), 
-        size, border, $scope.width, $scope.height);
+        $scope.squareSize, $scope.borderSize, $scope.width, $scope.height);
 
 
     $scope.arr = [];
@@ -32,6 +34,7 @@ imagingApp.controller('imagingSimulation', function($scope) {
             for (var j = 0; j < $scope.width; j++)
                 $scope.canvas.drawSquare(i, j, ($scope.arr[i][j] === true ? 1 : 0) );
     };
+    
     $scope.step = function() {
         var newArr = [];
         for (var i=0; i < $scope.height; i++) {
@@ -88,6 +91,54 @@ imagingApp.controller('imagingSimulation', function($scope) {
                     result++;
         }
         return result;
-    }
+    };
+    $scope.clear = function() {
+        for (var i=0; i < $scope.height; i++)
+            for (var j = 0; j < $scope.width; j++)
+                $scope.arr[i][j] = false;
+        $scope.redraw();
+    };
+    $scope.randomize = function() {
+        for (var i=0; i < $scope.height; i++)
+            for (var j = 0; j < $scope.width; j++) {
+                $scope.arr[i][j] = (Math.random() < .5) ? false : true;
+            }
+        $scope.redraw();
+    };
+    $scope.save = function() {
+        var obj = {width: $scope.width, height: $scope.height};
+        obj.name = $scope.saveName;
+        if(obj.name == null || obj.name === "")
+            return;
+        obj.arr = [];
+        for (var i=0; i < $scope.height; i++)
+            obj.arr[i] = $scope.arr[i].slice(0);  // Deep copy
+
+        var prevEntryIndex = $scope.history.findIndex(function(e, i, a){ // if object exists already
+                return e.name === obj.name;
+        });
+        if(prevEntryIndex != -1)
+            $scope.history[prevEntryIndex] = obj; // overwrite previous entry
+        else
+            $scope.history.push(obj); // create new entry
+    };
+    $scope.load = function() {
+        var name = $scope.saveName;
+        if(name == null || name === "")
+            return;
+        var obj = $scope.history.find(function(e, i, a){ // if object exists already
+                return e.name === name;
+        });
+        if(obj === undefined)
+            return;
+
+        $scope.arr = [];
+        for (var i=0; i < $scope.height; i++)
+            $scope.arr[i] = obj.arr[i].slice(0);  // Deep copy
+
+        $scope.canvas.resize($scope.squareSize, $scope.borderSize, obj.width, obj.height);
+        $scope.canvas.clearBoard();
+        $scope.redraw();
+    };
 });
 

@@ -32,9 +32,32 @@
                         </div>
                         <!-- options -->
                         <div id="options" class="mdl-cell mdl-cell--4-col">
-                            <h4>Simulation Properties</h4>
                             <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect"
                             ng-click="step()">Step</button>
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect"
+                            ng-click="clear()">Clear</button>
+                            <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect"
+                            ng-click="randomize()">Randomize</button>
+                            <br />
+                            <button id="saveMenuOpener" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">Save/Load</button>
+                            <li id="saveMenu">
+                                <span ng-repeat="sim in history" ng-click="setname()">
+                                    {{sim.name}}
+                                    <br />
+                                </span>
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input class="mdl-textfield__input" type="text" id="saveName" ng-model="saveName">
+                                    <label class="mdl-textfield__label" for="saveName">Save Name</label>
+                                </div>
+                                <br />
+                                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect"
+                                        ng-click="save()">Save</button>
+                                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect"
+                                        ng-click="load()">Load</button>
+                            </li>
+
+                            
+                            <h4>Simulation Properties</h4>
                         </div>
                     </div>
                 </div>

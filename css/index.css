@@ -4,3 +4,28 @@
 #options {
   padding-left: 5px;
 }
+#saveMenuOpener + li {
+  position: relative;
+  float: none;
+  display:list-item;
+  top: 100%;
+  padding-left: 15px;
+  display: none;
+  background-color: white;
+}
+#saveMenuOpener:hover + li {
+  display: inherit;
+}
+#saveMenuOpener + li:hover {
+  display: inherit;
+}
+#loadMenu > li {
+  position: relative;
+  top: 100%;
+  padding-left: 15px;
+  display: none;
+  background-color: white;
+}
+#loadMenu:hover > li {
+  display: inherit;
+}
