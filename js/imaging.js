@@ -3,7 +3,7 @@ var imagingApp = angular.module('imagingApp', []);
 imagingApp.controller('imagingSimulation', function($scope) {
     $scope.width = 20;
     $scope.height = 20;
-    $scope.history = [];
+    $scope.saveList = [];
     $scope.saveName = "";
     $scope.squareSize = 18;
     $scope.borderSize = 1;
@@ -29,7 +29,9 @@ imagingApp.controller('imagingSimulation', function($scope) {
             // $scope.canvas.drawSquare(x, y, ($scope.arr[x][y] === true ? 1 : 0) );
         }
     };
+    // Draws the board from the given array
     $scope.redraw = function() {
+        $scope.canvas.clearBoard();
         for (var i=0; i < $scope.height; i++)
             for (var j = 0; j < $scope.width; j++)
                 $scope.canvas.drawSquare(i, j, ($scope.arr[i][j] === true ? 1 : 0) );
@@ -114,19 +116,19 @@ imagingApp.controller('imagingSimulation', function($scope) {
         for (var i=0; i < $scope.height; i++)
             obj.arr[i] = $scope.arr[i].slice(0);  // Deep copy
 
-        var prevEntryIndex = $scope.history.findIndex(function(e, i, a){ // if object exists already
+        var prevEntryIndex = $scope.saveList.findIndex(function(e, i, a){ // if object exists already
                 return e.name === obj.name;
         });
         if(prevEntryIndex != -1)
-            $scope.history[prevEntryIndex] = obj; // overwrite previous entry
+            $scope.saveList[prevEntryIndex] = obj; // overwrite previous entry
         else
-            $scope.history.push(obj); // create new entry
+            $scope.saveList.push(obj); // create new entry
     };
     $scope.load = function() {
         var name = $scope.saveName;
         if(name == null || name === "")
             return;
-        var obj = $scope.history.find(function(e, i, a){ // if object exists already
+        var obj = $scope.saveList.find(function(e, i, a){ // if object exists already
                 return e.name === name;
         });
         if(obj === undefined)
@@ -137,7 +139,6 @@ imagingApp.controller('imagingSimulation', function($scope) {
             $scope.arr[i] = obj.arr[i].slice(0);  // Deep copy
 
         $scope.canvas.resize($scope.squareSize, $scope.borderSize, obj.width, obj.height);
-        $scope.canvas.clearBoard();
         $scope.redraw();
     };
 });

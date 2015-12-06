@@ -10,6 +10,7 @@ class Canvas {
 			this.ctx = this.element.getContext('2d');
 		}
 		this.clearBoard();
+		this.fillEmpty();
 	}
 	drawSquare(x, y, state) {
 		switch(state) {
@@ -28,12 +29,14 @@ class Canvas {
 				this.squareSize,
 				this.squareSize);
 	}
-	// Clears the board by drawing border color, then placing bg color squares
+	// Clears the board by drawing border color
 	clearBoard() {
 		this.ctx.fillStyle = this.borderColor;
 		this.ctx.fillRect(0, 0,
 				this.borderSize + this.width * (this.squareSize + this.borderSize),
 				this.borderSize + this.height * (this.squareSize + this.borderSize));
+	}
+	fillEmpty() {
 		for(var i = 0; i < this.width; i++)
 			for(var j = 0; j < this.height; j++)
 				this.drawSquare(i, j, 0);
